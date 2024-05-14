@@ -1,0 +1,18 @@
+{
+    "sourceFile": "lib/utils/biometrics.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1715475505502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1715475505502,
+            "name": "Commit-0",
+            "content": "import 'package:flutter/material.dart';\r\nimport 'package:flutter/services.dart';\r\nimport 'package:local_auth_android/local_auth_android.dart';\r\nimport 'package:local_auth/local_auth.dart';\r\n\r\nclass LocalAuthApi {\r\n  static final _auth = LocalAuthentication();\r\n\r\n  static Future<List<BiometricType>> hasBiometrics() async {\r\n    try {\r\n      final checkBiometrics = await _auth.canCheckBiometrics;\r\n      if (checkBiometrics) {\r\n        List<BiometricType> availableBiometrics =\r\n            await _auth.getAvailableBiometrics();\r\n        debugPrint(availableBiometrics.toString());\r\n        return availableBiometrics;\r\n      }\r\n      return [];\r\n    } on PlatformException catch (e) {\r\n      debugPrint(e.toString());\r\n      return [];\r\n    }\r\n  }\r\n\r\n  static Future<bool> authenticate() async {\r\n    final availableBiometrics = await hasBiometrics();\r\n\r\n    try {\r\n      if (availableBiometrics.contains(BiometricType.fingerprint) ||\r\n          availableBiometrics.contains(BiometricType.strong)) {\r\n        final autent = await _auth.authenticate(\r\n            authMessages: const <AuthMessages>[\r\n              AndroidAuthMessages(\r\n                  signInTitle: 'Ingrese Huella Digital',\r\n                  biometricHint: 'Verificacion Requerida'),\r\n            ],\r\n            localizedReason: 'Ingrese su huella en el sensor',\r\n            options: const AuthenticationOptions(\r\n                useErrorDialogs: true, stickyAuth: false));\r\n        return autent;\r\n      }\r\n      if (availableBiometrics.contains(BiometricType.face) ||\r\n          availableBiometrics.contains(BiometricType.weak)) {\r\n        final autent = await _auth.authenticate(\r\n            authMessages: const <AuthMessages>[\r\n              AndroidAuthMessages(\r\n                  signInTitle: 'Ingrese su rostro',\r\n                  biometricHint: 'Verificacion Requerida'),\r\n            ],\r\n            localizedReason: 'Ingrese su rostro en el sensor',\r\n            options: const AuthenticationOptions(\r\n                useErrorDialogs: true, stickyAuth: false));\r\n        return autent;\r\n      }\r\n      return false;\r\n    } on PlatformException catch (e) {\r\n      debugPrint(e.toString());\r\n      return false;\r\n    }\r\n  }\r\n}\r\n"
+        }
+    ]
+}
