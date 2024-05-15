@@ -34,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late IO.Socket socket;
+  late bool _isConnected = false;
 
   int _counter = 0;
 
@@ -45,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void connectToServer() {
     try {
-      socket = IO.io('ws://192.168.1.74:40000', <String, dynamic>{
+      socket = IO.io('ws://189.141.178.191:40000', <String, dynamic>{
         'transports': ['websocket'],
         'autoConnect': false,
       });
@@ -53,14 +54,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
       socket.onConnect((_) {
         debugPrint('connect');
-        socket.emit('getPares', 'Hello server!'); // Pedir datos
+        setState(() {
+          _isConnected = true;
+        });
+        socket.emit('insertSensorData', 'Hello server!'); // Pedir datos
       });
 
-      socket.on('event', (data) {
+      socket.on('insertSensorData', (data) {
         debugPrint('Received data: $data');
       });
 
-      socket.onDisconnect((_) => debugPrint('disconnect'));
+      socket.onDisconnect((_) => {
+            debugPrint('disconnect'),
+            setState(() {
+              _isConnected = false;
+            })
+          });
+    } catch (e) {
+      debugPrint('Error: $e');
+    }
+  }
+
+  void disconnectFromServer() {
+    try {
+      socket.disconnect();
     } catch (e) {
       debugPrint('Error: $e');
     }
@@ -77,7 +94,17 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Row(
+          children: <Widget>[
+            CircleAvatar(
+              backgroundColor: _isConnected
+                  ? Colors.green
+                  : Theme.of(context).colorScheme.error,
+              radius: 8,
+            ),
+            Text(widget.title),
+          ],
+        ),
       ),
       body: Center(
         child: Column(
@@ -93,10 +120,21 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => connectToServer(),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () => connectToServer(),
+            tooltip: 'Connect to server',
+            child: const Icon(Icons.wifi),
+          ),
+          const SizedBox(width: 16),
+          FloatingActionButton(
+            onPressed: () => disconnectFromServer(),
+            tooltip: 'Disconnect from server',
+            child: const Icon(Icons.signal_wifi_connected_no_internet_4_sharp),
+          )
+        ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
