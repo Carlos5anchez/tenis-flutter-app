@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tenis/pages/home.dart';
+import 'package:flutter_tenis/pages/profile.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 void main() {
@@ -14,8 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 223, 18, 18)),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 223, 18, 18)),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Smart Shoes App'),
@@ -35,18 +37,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   late IO.Socket socket;
   late bool _isConnected = false;
-
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  int currentPageIndex = 0;
 
   void connectToServer() {
     try {
-      socket = IO.io('ws://189.141.178.191:40000', <String, dynamic>{
+      debugPrint('trying to connect to server...');
+      socket = IO.io('ws://192.168.1.76:40000', <String, dynamic>{
         'transports': ['websocket'],
         'autoConnect': false,
       });
@@ -93,49 +89,130 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Row(
-          children: <Widget>[
-            CircleAvatar(
-              backgroundColor: _isConnected
-                  ? Colors.green
-                  : Theme.of(context).colorScheme.error,
-              radius: 8,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundColor: _isConnected
+                      ? Colors.green
+                      : Theme.of(context).colorScheme.error,
+                  radius: 8,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  _isConnected ? 'Conectado' : 'Desconectado',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ],
             ),
-            Text(widget.title),
-          ],
-        ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          )),
+
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        indicatorColor: Color.fromARGB(255, 236, 17, 64),
+        selectedIndex: currentPageIndex,
+        destinations: const <Widget>[
+          NavigationDestination(
+            selectedIcon: Icon(
+              Icons.home,
+              color: Colors.white,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            icon: Icon(
+              Icons.home_outlined,
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () => connectToServer(),
-            tooltip: 'Connect to server',
-            child: const Icon(Icons.wifi),
+            label: 'Inicio',
           ),
-          const SizedBox(width: 16),
-          FloatingActionButton(
-            onPressed: () => disconnectFromServer(),
-            tooltip: 'Disconnect from server',
-            child: const Icon(Icons.signal_wifi_connected_no_internet_4_sharp),
-          )
+          NavigationDestination(
+            selectedIcon: Icon(
+              Icons.show_chart,
+              color: Colors.white,
+            ),
+            icon: Badge(child: Icon(Icons.show_chart)),
+            label: 'Rendimiento',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(
+              Icons.person_2,
+              color: Colors.white,
+            ),
+            icon: Badge(
+              label: Text('2'),
+              child: Icon(Icons.person_2),
+            ),
+            label: 'Perfil',
+          ),
         ],
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+
+      body: <Widget>[
+        /// Home page
+
+        ExercisePage(),
+
+        /// Messages page
+        ListView.builder(
+          reverse: true,
+          itemCount: 2,
+          itemBuilder: (BuildContext context, int index) {
+            if (index == 0) {
+              return Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  margin: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Text('Hello',
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          )),
+                ),
+              );
+            }
+            return Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                margin: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Text('Hi!',
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        )),
+              ),
+            );
+          },
+        ),
+
+        UserProfilePage(),
+      ][currentPageIndex],
+      // floatingActionButton: Row(
+      //   mainAxisAlignment: MainAxisAlignment.end,
+      //   children: [
+      //     FloatingActionButton(
+      //       onPressed: () => connectToServer(),
+      //       tooltip: 'Connect to server',
+      //       child: const Icon(Icons.wifi),
+      //     ),
+      //     const SizedBox(width: 16),
+      //     FloatingActionButton(
+      //       onPressed: () => disconnectFromServer(),
+      //       tooltip: 'Disconnect from server',
+      //       child: const Icon(Icons.signal_wifi_connected_no_internet_4_sharp),
+      //     )
+      //   ],
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
