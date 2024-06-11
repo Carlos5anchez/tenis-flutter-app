@@ -3,35 +3,65 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ExercisePage extends StatelessWidget {
-  const ExercisePage({Key? key}) : super(key: key);
+  final Map<String, dynamic>? data;
+  final List<dynamic>? arrayData;
+
+  ExercisePage({Key? key, this.data, this.arrayData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.history_rounded,
-              color: Colors.black,
-              size: 30,
-            ),
-            onPressed: () {},
+    String temperatura = data?['temperatura']?.toString() ?? 'Offline';
+    String humedad = data?['humedad']?.toString() ?? '';
+
+    String ultimaActualizacion = '00-00';
+
+    Map<DateTime, double> dailyMaxTemperatures = {};
+
+    if (temperatura != 'Offline') {
+      var time = DateTime.now().toIso8601String();
+      ultimaActualizacion =
+          'Hora: ${time.substring(11, 16)} Fecha: ${time.substring(5, 10)}';
+    }
+
+    if (arrayData != null) {
+      for (var entry in arrayData!) {
+        DateTime fecha = DateTime.parse(entry['fecha']);
+        DateTime day = DateTime(fecha.year, fecha.month, fecha.day);
+        double temp = double.parse(entry['temperatura'].toString());
+        if (!dailyMaxTemperatures.containsKey(day) ||
+            dailyMaxTemperatures[day]! < temp) {
+          dailyMaxTemperatures[day] = temp;
+        }
+      }
+    }
+
+    List<BarChartGroupData> barGroups =
+        dailyMaxTemperatures.entries.map((entry) {
+      return BarChartGroupData(
+        x: entry.key.millisecondsSinceEpoch,
+        barRods: [
+          BarChartRodData(
+            y: entry.value,
+            colors: [Color.fromARGB(255, 230, 74, 35)],
+            width: 20,
+            borderRadius: BorderRadius.zero,
           ),
         ],
-      ),
+      );
+    }).toList();
+
+    return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 20),
             const Text(
-              'Bienvenido, Carlos!',
+              'Bienvenido, Leonardo!',
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 70),
             Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
@@ -50,24 +80,17 @@ class ExercisePage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
+                          padding: EdgeInsets.only(left: 10.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
-                                'Calorias',
+                                'Temperatura \n Actual',
                                 style: TextStyle(
                                     color: Color.fromARGB(255, 4, 5, 26),
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                'Consumidas hoy',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 235, 76, 76),
-                                    fontSize: 20,
+                                    fontSize: 24,
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -78,23 +101,30 @@ class ExercisePage extends StatelessWidget {
                         radius: 60.0,
                         lineWidth: 13.0,
                         animation: true,
-                        percent: 0.7,
+                        percent: temperatura != 'Offline'
+                            ? double.parse(temperatura) / 100
+                            : 0,
                         center: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Text(
-                              "10023",
-                              style: TextStyle(
+                              temperatura != 'Offline'
+                                  ? '$temperatura °C'
+                                  : 'Offline',
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20.0),
                             ),
                             Text(
-                              "560/120",
-                              style: TextStyle(fontSize: 12.0),
+                              temperatura != 'Offline'
+                                  ? 'Humedad: $humedad %'
+                                  : '',
+                              style: const TextStyle(
+                                  fontSize: 11.0, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
                         circularStrokeCap: CircularStrokeCap.round,
-                        progressColor: Color.fromARGB(255, 180, 34, 15),
+                        progressColor: const Color.fromARGB(255, 180, 34, 15),
                       ),
                     ],
                   ),
@@ -103,7 +133,7 @@ class ExercisePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        '',
+                        'Temperatura máxima por día',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
@@ -112,56 +142,53 @@ class ExercisePage extends StatelessWidget {
                         height: 200,
                         child: BarChart(
                           BarChartData(
-                            borderData: FlBorderData(show: false),
-                            titlesData: FlTitlesData(
-                              show: false,
-                            ),
                             gridData: FlGridData(show: false),
-                            barGroups: [
-                              BarChartGroupData(x: 1, barRods: [
-                                BarChartRodData(
-                                    y: 200,
-                                    colors: [Color.fromARGB(255, 192, 129, 13)])
-                              ]),
-                              BarChartGroupData(x: 3, barRods: [
-                                BarChartRodData(
-                                    y: 300,
-                                    colors: [Color.fromARGB(255, 233, 30, 64)])
-                              ]),
-                              BarChartGroupData(x: 5, barRods: [
-                                BarChartRodData(
-                                    y: 150,
-                                    colors: [Color.fromARGB(255, 233, 30, 57)])
-                              ]),
-                              BarChartGroupData(x: 7, barRods: [
-                                BarChartRodData(y: 250, colors: [
-                                  const Color.fromARGB(255, 233, 54, 30)
-                                ])
-                              ]),
-                              BarChartGroupData(x: 9, barRods: [
-                                BarChartRodData(y: 300, colors: [
-                                  const Color.fromARGB(255, 243, 159, 33)
-                                ])
-                              ]),
-                            ],
+                            titlesData: FlTitlesData(
+                              bottomTitles: SideTitles(
+                                showTitles: true,
+                                getTitles: (value) {
+                                  DateTime date =
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                          value.toInt());
+                                  return "Dia. ${date.day}";
+                                },
+                                getTextStyles: (context, value) =>
+                                    const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 10,
+                                ),
+                                margin: 8,
+                              ),
+                              leftTitles: SideTitles(showTitles: false),
+                            ),
+                            borderData: FlBorderData(
+                              show: true,
+                              border:
+                                  Border.all(color: const Color(0xff37434d)),
+                            ),
+                            barGroups: barGroups,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
-                  const Row(
+                  const SizedBox(height: 30),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'Ultima actualización:',
+                      const Text(
+                        'Última actualización:',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '14:20 PM',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                        temperatura != 'Offline'
+                            ? ultimaActualizacion
+                            : '00-00',
+                        style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
                       ),
                     ],
                   ),
@@ -173,6 +200,10 @@ class ExercisePage extends StatelessWidget {
       ),
     );
   }
+}
+
+extension ListExtensions<T> on List<T> {
+  List<T> takeLast(int n) => length >= n ? sublist(length - n) : this;
 }
 
 void main() {
@@ -190,7 +221,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
-      home: const ExercisePage(),
+      home: ExercisePage(
+        arrayData: [
+          {"temperatura": 25, "humedad": 50, "fecha": "2019-10-10 10:00:00"},
+          {"temperatura": 38.24, "humedad": 26, "fecha": "2024-06-10 08:39:25"},
+          {"temperatura": 38.24, "humedad": 26, "fecha": "2024-06-10 08:48:40"}
+        ],
+      ),
     );
   }
 }

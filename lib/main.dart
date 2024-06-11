@@ -1,7 +1,11 @@
+import 'package:elegant_notification/resources/arrays.dart';
+import 'package:elegant_notification/resources/stacked_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tenis/pages/home.dart';
+import 'package:flutter_tenis/pages/login.dart';
 import 'package:flutter_tenis/pages/profile.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:elegant_notification/elegant_notification.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,7 +14,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,8 +22,22 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 223, 18, 18)),
         useMaterial3: true,
+        navigationBarTheme: NavigationBarThemeData(
+          backgroundColor: const Color.fromARGB(255, 4, 21, 27),
+          indicatorColor: const Color.fromARGB(255, 236, 17, 64),
+          labelTextStyle: MaterialStateProperty.all(
+            const TextStyle(color: Colors.white),
+          ),
+          iconTheme: MaterialStateProperty.all(
+            const IconThemeData(color: Colors.white),
+          ),
+        ),
       ),
-      home: const MyHomePage(title: 'Smart Shoes App'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginView(),
+        '/home': (context) => MyHomePage(title: 'Flutter Demo Home Page'),
+      },
     );
   }
 }
@@ -36,36 +53,89 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late IO.Socket socket;
-  late bool _isConnected = false;
+  bool _isConnected = false;
   int currentPageIndex = 0;
+  var data;
+  late List<dynamic> alertsData = [];
+  late List<dynamic> arrayData = [];
 
   void connectToServer() {
     try {
-      debugPrint('trying to connect to server...');
-      socket = IO.io('ws://192.168.1.76:40000', <String, dynamic>{
+      debugPrint('Trying to connect to server...');
+      socket = IO.io('ws://187.154.221.14:40000', <String, dynamic>{
         'transports': ['websocket'],
         'autoConnect': false,
       });
+
       socket.connect();
 
       socket.onConnect((_) {
-        debugPrint('connect');
+        debugPrint('Connected to server');
         setState(() {
           _isConnected = true;
         });
-        socket.emit('insertSensorData', 'Hello server!'); // Pedir datos
+        socket.emit('userStats');
+        socket.emit('alerts');
       });
 
-      socket.on('insertSensorData', (data) {
-        debugPrint('Received data: $data');
+      socket.on('clima', (data) {
+        debugPrint('Received clima: $data');
       });
 
-      socket.onDisconnect((_) => {
-            debugPrint('disconnect'),
-            setState(() {
-              _isConnected = false;
-            })
-          });
+      socket.on('userData_leonardo', (data) {
+        setState(() {
+          this.data = data;
+        });
+        debugPrint('Received userData_leonardo: $data');
+      });
+      socket.on('userStats', (data) {
+        setState(() {
+          arrayData = data;
+        });
+        debugPrint('Received userStats: $data');
+      });
+      socket.on('alerts', (data) {
+        setState(() {
+          alertsData = data;
+        });
+        debugPrint('Received alerts: $data');
+      });
+      socket.on(
+          "newAlerts",
+          (data) => {
+                setState(() {
+                  alertsData = data;
+                }),
+                debugPrint('Received alerts: $data'),
+                ElegantNotification.error(
+                  width: 360,
+                  toastDuration: const Duration(seconds: 5),
+                  stackedOptions: StackedOptions(
+                    key: 'topRight',
+                    type: StackedType.below,
+                    itemOffset: const Offset(0, 5),
+                  ),
+                  position: Alignment.topRight,
+                  animation: AnimationType.fromRight,
+                  title: const Text('Alerta de sensores'),
+                  description: Text(data[data.length - 1]['data']),
+                  onDismiss: () {},
+                ).show(context),
+              });
+      socket.onDisconnect((_) {
+        debugPrint('Disconnected from server');
+        setState(() {
+          _isConnected = false;
+        });
+      });
+
+      socket.onConnectError((err) {
+        debugPrint('Connect error: $err');
+      });
+
+      socket.onError((err) {
+        debugPrint('Error: $err');
+      });
     } catch (e) {
       debugPrint('Error: $e');
     }
@@ -88,131 +158,80 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: <Widget>[
-                CircleAvatar(
-                  backgroundColor: _isConnected
-                      ? Colors.green
-                      : Theme.of(context).colorScheme.error,
-                  radius: 8,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  _isConnected ? 'Conectado' : 'Desconectado',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ],
-            ),
-          )),
-
       bottomNavigationBar: NavigationBar(
+        backgroundColor: const Color.fromARGB(255, 4, 21, 27),
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;
           });
         },
-        indicatorColor: Color.fromARGB(255, 236, 17, 64),
+        indicatorColor: const Color.fromARGB(255, 192, 59, 59),
         selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
+        destinations: const [
           NavigationDestination(
             selectedIcon: Icon(
               Icons.home,
-              color: Colors.white,
+              color: Colors.white70,
             ),
             icon: Icon(
               Icons.home_outlined,
+              color: Colors.white70,
             ),
             label: 'Inicio',
           ),
           NavigationDestination(
             selectedIcon: Icon(
-              Icons.show_chart,
-              color: Colors.white,
+              Icons.mail,
+              color: Colors.white70,
             ),
-            icon: Badge(child: Icon(Icons.show_chart)),
-            label: 'Rendimiento',
+            icon: Badge(
+              child: Icon(
+                Icons.mail,
+                color: Colors.white70,
+              ),
+            ),
+            label: 'Alertas',
           ),
           NavigationDestination(
             selectedIcon: Icon(
               Icons.person_2,
-              color: Colors.white,
+              color: Colors.white70,
             ),
             icon: Badge(
               label: Text('2'),
-              child: Icon(Icons.person_2),
+              child: Icon(
+                Icons.person_2,
+                color: Color.fromARGB(94, 255, 255, 255),
+              ),
             ),
             label: 'Perfil',
           ),
         ],
       ),
-
       body: <Widget>[
         /// Home page
-
-        ExercisePage(),
+        ExercisePage(data: data, arrayData: arrayData),
 
         /// Messages page
         ListView.builder(
-          reverse: true,
-          itemCount: 2,
+          itemCount: alertsData.length,
           itemBuilder: (BuildContext context, int index) {
-            if (index == 0) {
-              return Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: const EdgeInsets.all(8.0),
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Text('Hello',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          )),
-                ),
-              );
-            }
-            return Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: const EdgeInsets.all(8.0),
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Text('Hi!',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        )),
+            return ListTile(
+              title: Text('Alerta ${index + 1}'),
+              subtitle: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(alertsData[index]['data']),
+                  Text(alertsData[index]['fecha'])
+                ],
               ),
             );
           },
         ),
 
-        UserProfilePage(),
+        UserProfilePage(isConected: _isConnected),
       ][currentPageIndex],
-      // floatingActionButton: Row(
-      //   mainAxisAlignment: MainAxisAlignment.end,
-      //   children: [
-      //     FloatingActionButton(
-      //       onPressed: () => connectToServer(),
-      //       tooltip: 'Connect to server',
-      //       child: const Icon(Icons.wifi),
-      //     ),
-      //     const SizedBox(width: 16),
-      //     FloatingActionButton(
-      //       onPressed: () => disconnectFromServer(),
-      //       tooltip: 'Disconnect from server',
-      //       child: const Icon(Icons.signal_wifi_connected_no_internet_4_sharp),
-      //     )
-      //   ],
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

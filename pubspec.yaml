@@ -39,6 +39,7 @@ dependencies:
   local_auth: ^2.1.8
   fl_chart: ^0.36.0
   percent_indicator: ^4.2.2+1
+  elegant_notification: ^2.2.0
   
 dev_dependencies:
   flutter_test:

@@ -1,43 +1,51 @@
 import 'package:flutter/material.dart';
 
 class UserProfilePage extends StatelessWidget {
-  const UserProfilePage({Key? key}) : super(key: key);
+  final bool? isConected;
+  const UserProfilePage({Key? key, this.isConected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeader(context),
-            _buildInformationSection(),
-            _buildApartmentSection(),
-          ],
-        ),
-      ),
+      body: Container(
+          height: MediaQuery.of(context).size.height,
+          alignment: Alignment.bottomCenter,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(context),
+                _buildInformationSection(context),
+                // _buildApartmentSection(),
+              ],
+            ),
+          )),
     );
   }
 
   Widget _buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
+      height: MediaQuery.of(context).size.height * 0.4,
       alignment: Alignment.center,
       color: Colors.white,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 40,
             backgroundImage: AssetImage(
                 'assets/profile.jpg'), // Reemplazar con la imagen de perfil real
           ),
           const SizedBox(height: 8),
           const Text(
-            'Carlos Sanchez',
+            'Leonardo Villanueva Medina',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const Text(
-            'csanchez@gmail.com',
+            'leoxdmed97@gmail.com',
             style: TextStyle(color: Colors.grey),
           ),
           const SizedBox(height: 16),
@@ -50,12 +58,14 @@ class UserProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildInformationSection() {
+  Widget _buildInformationSection(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 245, 46, 46),
+      color: const Color.fromARGB(255, 184, 54, 54),
+      alignment: Alignment.bottomCenter,
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           const Text(
             'Mis Ajustes',
@@ -71,10 +81,31 @@ class UserProfilePage extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.language, color: Colors.white),
-            title: const Text('Ajustes de Conexión',
+            title: const Text('Estado de Conexión',
                 style: TextStyle(color: Colors.white)),
             trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white),
-            onTap: () {},
+            onTap: () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Container(
+                      height: 200,
+                      color: Colors.white,
+                      child: Center(
+                          child: isConected!
+                              ? const Text('Conectado al server',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold))
+                              : const Text('Desconectado del server',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold))),
+                    );
+                  });
+            },
           ),
           ListTile(
             leading: const Icon(Icons.help, color: Colors.white),
@@ -87,7 +118,9 @@ class UserProfilePage extends StatelessWidget {
             title: const Text('Cerrar Sesión',
                 style: TextStyle(color: Colors.white)),
             trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed('/');
+            },
           ),
         ],
       ),
