@@ -125,9 +125,8 @@ class _LoginViewState extends State<LoginView> {
                                 AlwaysStoppedAnimation<Color>(Colors.white),
                           )
                         : Text('Iniciar Sesión',
-                            style: TextStyle(color: Colors.white)),
+                            style: TextStyle(color: Colors.black)),
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 224, 45, 13),
                       minimumSize: Size(double.infinity, 50),
                       textStyle: TextStyle(fontSize: 16),
                     ),

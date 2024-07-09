@@ -41,8 +41,8 @@ class ExercisePage extends StatelessWidget {
         x: entry.key.millisecondsSinceEpoch,
         barRods: [
           BarChartRodData(
-            y: entry.value,
-            colors: [Color.fromARGB(255, 230, 74, 35)],
+            toY: entry.value,
+            color: Color.fromARGB(255, 230, 74, 35),
             width: 20,
             borderRadius: BorderRadius.zero,
           ),
@@ -144,22 +144,25 @@ class ExercisePage extends StatelessWidget {
                           BarChartData(
                             gridData: FlGridData(show: false),
                             titlesData: FlTitlesData(
-                              bottomTitles: SideTitles(
-                                showTitles: true,
-                                getTitles: (value) {
-                                  DateTime date =
-                                      DateTime.fromMillisecondsSinceEpoch(
-                                          value.toInt());
-                                  return "Dia. ${date.day}";
-                                },
-                                getTextStyles: (context, value) =>
-                                    const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 10,
+                              bottomTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  getTitlesWidget: (value, meta) {
+                                    DateTime date =
+                                        DateTime.fromMillisecondsSinceEpoch(
+                                            value.toInt());
+                                    return Text("Dia. ${date.day}",
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 10,
+                                        ));
+                                  },
+                                  reservedSize: 30,
                                 ),
-                                margin: 8,
                               ),
-                              leftTitles: SideTitles(showTitles: false),
+                              leftTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
                             ),
                             borderData: FlBorderData(
                               show: true,

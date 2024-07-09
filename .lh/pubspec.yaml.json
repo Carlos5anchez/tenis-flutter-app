@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1715492128131,
@@ -40,6 +40,18 @@
                 {
                     "date": 1718012764949,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,8 @@\n   socket_io_client: ^2.0.3+1\r\n   local_auth: ^2.1.8\r\n   fl_chart: ^0.36.0\r\n   percent_indicator: ^4.2.2+1\r\n-  elegant_notification: ^2.2.0\r\n   \r\n dev_dependencies:\r\n   flutter_test:\r\n     sdk: flutter\r\n"
+                },
+                {
+                    "date": 1720545246863,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,8 +38,9 @@\n   socket_io_client: ^2.0.3+1\r\n   local_auth: ^2.1.8\r\n   fl_chart: ^0.36.0\r\n   percent_indicator: ^4.2.2+1\r\n+  elegant_notification: ^2.2.0\r\n   \r\n dev_dependencies:\r\n   flutter_test:\r\n     sdk: flutter\r\n@@ -48,9 +49,9 @@\n   # encourage good coding practices. The lint set provided by the package is\r\n   # activated in the `analysis_options.yaml` file located at the root of your\r\n   # package. See that file for information about deactivating specific lint\r\n   # rules and activating additional ones.\r\n-  flutter_lints: ^2.0.0\r\n+  flutter_lints: any\r\n \r\n # For information on the generic Dart part of this file, see the\r\n # following page: https://dart.dev/tools/pub/pubspec\r\n \r\n"
+                },
+                {
+                    "date": 1720545283675,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n   # Use with the CupertinoIcons class for iOS style icons.\r\n   cupertino_icons: ^1.0.2\r\n   socket_io_client: ^2.0.3+1\r\n   local_auth: ^2.1.8\r\n-  fl_chart: ^0.36.0\r\n+  fl_chart: any\r\n   percent_indicator: ^4.2.2+1\r\n   elegant_notification: ^2.2.0\r\n   \r\n dev_dependencies:\r\n@@ -49,9 +49,9 @@\n   # encourage good coding practices. The lint set provided by the package is\r\n   # activated in the `analysis_options.yaml` file located at the root of your\r\n   # package. See that file for information about deactivating specific lint\r\n   # rules and activating additional ones.\r\n-  flutter_lints: any\r\n+  flutter_lints: ^2.0.0\r\n \r\n # For information on the generic Dart part of this file, see the\r\n # following page: https://dart.dev/tools/pub/pubspec\r\n \r\n"
+                },
+                {
+                    "date": 1720545452414,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n   # Use with the CupertinoIcons class for iOS style icons.\r\n   cupertino_icons: ^1.0.2\r\n   socket_io_client: ^2.0.3+1\r\n   local_auth: ^2.1.8\r\n-  fl_chart: any\r\n+  fl_chart: ^0.68.0\r\n   percent_indicator: ^4.2.2+1\r\n   elegant_notification: ^2.2.0\r\n   \r\n dev_dependencies:\r\n"
                 }
             ],
             "date": 1715492128130,
