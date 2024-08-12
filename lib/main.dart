@@ -5,7 +5,6 @@ import 'package:flutter_tenis/pages/home.dart';
 import 'package:flutter_tenis/pages/information.dart';
 import 'package:flutter_tenis/pages/login.dart';
 import 'package:flutter_tenis/pages/profile.dart';
-import 'package:flutter_tenis/views/conection_bt.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:elegant_notification/elegant_notification.dart';
 

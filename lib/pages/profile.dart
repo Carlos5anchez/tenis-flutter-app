@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tenis/views/pair_device.dart';
 import '../views/conection_bt.dart';
 
 class UserProfilePage extends StatelessWidget {
@@ -80,16 +81,14 @@ class UserProfilePage extends StatelessWidget {
             trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white),
             onTap: () {
               showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                builder: (BuildContext context) {
-                  return SizedBox(
-                    height: MediaQuery.of(context).size.height *
-                        0.9, // Ocupa el 90% de la pantalla
-                    child: BtPage(),
-                  );
-                },
-              );
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Container(
+                      height: 400,
+                      color: Colors.white,
+                      child: BluetoothView(),
+                    );
+                  });
             },
           ),
           ListTile(
@@ -200,6 +199,26 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const UserProfilePage(),
+    );
+  }
+}
+
+class DevicePairingPage extends StatelessWidget {
+  const DevicePairingPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Vincular Dispositivos'),
+        backgroundColor: Colors.red,
+      ),
+      body: const Center(
+        child: Text(
+          'Vincular Dispositivos',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
     );
   }
 }
