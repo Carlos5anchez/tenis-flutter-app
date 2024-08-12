@@ -1,0 +1,147 @@
+{
+    "arrticles":[
+        {
+            "source":{
+                "id":null,
+                "name":"World Health Organization"
+            },
+            "author":"World Health Organization",
+            "title":"Diabetes",
+            "url":"https://www.who.int/news-room/fact-sheets/detail/diabetes",
+            "urlToImage":"https://cdn.who.int/media/images/default-source/imported/diabetes5.tmb-1920v.png?sfvrsn=1b2e7651_38",
+            "publishedAt":"2023-04-05",
+            "overview":"Diabetes is a chronic disease that occurs either when the pancreas does not produce enough insulin or when the body cannot effectively use the insulin it produces. Insulin is a hormone that regulates blood glucose. Hyperglycaemia, also called raised blood glucose or raised blood sugar, is a common effect of uncontrolled diabetes and over time leads to serious damage to many of the body's systems, especially the nerves and blood vessels.",
+            "oncarrusel":true
+        },
+        {
+            "source":{
+                "id":null,
+                "name":"WebMD"
+            },
+            "author":"WebDM Editorial Contributors",
+            "title":"Understanding Diabetes -- Diagnosis and Treatment",
+            "url":"https://www.webmd.com/diabetes/understanding-diabetes-detection-treatment",
+            "urlToImage":"https://www.floridatoday.com/gcdn/presto/2020/03/05/PBRE/f1afb018-cc19-4459-a601-45bc538107ee-GettyImages-530284279.jpg",
+            "publishedAt":"2024-02-12",
+            "overview":"Your doctor may suspect you have diabetes if you have some risk factors for diabetes, or if you have high levels of blood sugar in your urine. Your blood sugar (also called blood glucose) levels may be high if your pancreas is producing little or no insulin (type 1 diabetes), or if the body is not responding normally to insulin (type 2 diabetes)",
+            "oncarrusel":false
+        },
+        {
+            "source":{
+                "id":null,
+                "name":"WebMD"
+            },
+            "author":"Timothy Gower",
+            "title":"Types of Insulin for Diabetes Treatment",
+            "url":"https://www.webmd.com/diabetes/diabetes-types-insulin",
+            "urlToImage":"https://img.lb.wbmdstatic.com/vim/live/webmd/consumer_assets/site_images/article_thumbnails/BigBead/how_insulin_works_bigbead/1800x1200_how_insulin_works_bigbead.jpg?resize=750:*",
+            "publishedAt":"2024-05-24",
+            "overview":"Insulin is a hormone that your pancreas makes to allow cells to use glucose. When your body isn't making or using insulin the way it should, you can take manufactured insulin to help control your blood sugar. Most people take insulin by injecting it into the skin, though there’s also a version that you inhale. If you have type 1 diabetes, you need insulin because your pancreas no longer makes the hormone. If you have type 2 diabetes, you may need insulin, though many people with this form of the disease can control their blood sugar without it.",
+            "oncarrusel":false
+        },
+        {
+            "source":{
+                "id":null,
+                "name":"WebMD"
+            },
+            "author":"WebDM Editorial Contributors",
+            "title":"Diabetes and Your Feet",
+            "url":"https://www.webmd.com/diabetes/peripheral-neuropathy-foot-skin-care",
+           "urlToImage":"https://www.floridatoday.com/gcdn/presto/2020/03/05/PBRE/f1afb018-cc19-4459-a601-45bc538107ee-GettyImages-530284279.jpg",
+            "publishedAt":"2023-03-04",
+            "overview":"Diabetes can damage nerves in your arms and legs. It’s called peripheral neuropathy. If you have it, your feet and skin need extra care and attention. Learn more about how to qualify for disability for peripheral neuropathy.",
+            "oncarrusel":true
+        },
+        {
+            "source":{
+                "id":null,
+                "name":"WebMD"
+            },
+            "author":"WebDM Editorial Contributors",
+            "title":"Understanding Peripheral Neuropathy",
+            "url":"https://www.webmd.com/brain/understanding-peripheral-neuropathy-basics",
+           "urlToImage":"https://img.lb.wbmdstatic.com/vim/live/webmd/consumer_assets/site_images/article_thumbnails/BigBead/understanding_peripheral_neuropathy_bigbead/1800x1200_understanding_peripheral_neuropathy_bigbead.jpg?resize=750:*",
+            "publishedAt":"2024-06-05",
+            "overview":"Peripheral neuropathy is a general term for nerve damage that causes weakness, numbness and pain, usually in your hands and feet. It can also affect other areas of your body and bodily functions including digestion and blood pressure control.",
+            "oncarrusel":true
+        },
+        {
+            "source":{
+                "id":null,
+                "name":"verywell health"
+            },
+            "author":"James Myhre & Dennis Sifris, MD",
+            "title":"Diabetes and Pancreatic Cancer: What Is the Relationship",
+            "url":"https://www.verywellhealth.com/diabetes-and-pancreatic-cancer-6828602",
+            "urlToImage":"https://www.verywellhealth.com/thmb/zFWI8HezKcpskG2bWXTtCIFC2ME=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-1380716288-c44e6927df43481fb3102138a18ce011.jpg",
+            "publishedAt":"2022-12-15",
+            "overview":"Diabetes and pancreatic cancer have a cause-and-effect relationship. Diabetes causes changes in cells that can lead to cancer due to the damaging effects of high blood sugar. Meanwhile, pancreatic cancer can cause diabetes by disrupting one of the key functions of the pancreas—the production of the hormone insulin, which regulates blood sugar.",
+            "oncarrusel":false
+        },
+        {
+            "source":{
+                "id":null,
+                "name":"vida y salud"
+            },
+            "author":"Vida y Salud",
+            "title":"Investigando al pez tetra mexicano para encontrar nuevos medicamentos para personas con diabetes",
+            "url":"https://www.verywellhealth.com/diabetes-and-pancreatic-cancer-6828602",
+            "urlToImage":"https://www.verywellhealth.com/thmb/zFWI8HezKcpskG2bWXTtCIFC2ME=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-1380716288-c44e6927df43481fb3102138a18ce011.jpg",
+            "publishedAt":"2023-10-12",
+            "overview":"Investigando el pez tetra mexicano que tiene cambios enormes en los niveles de glucosa en la sangre sin padecer efectos secundarios. Entender esto ayudaría a encontrar nuevos medicamentos para personas con diabetes tipo 2.",
+            "oncarrusel":false
+        },
+        {
+            "source":{
+                "id":null,
+                "name":"Salud180 El estilo de vida saludable"
+            },
+            "author":"Diana Mendieta",
+            "title":"Investigando al pez tetra mexicano para encontrar nuevos medicamentos para personas con diabetes",
+            "url":"https://www.salud180.com/bienestar/9-habitos-que-causan-diabetes",
+            "urlToImage":"https://cdn2.salud180.com/sites/default/files/styles/4x3_medium/public/causas-de-diabetes.jpg",
+            "publishedAt":"2024-04-25",
+            "overview":"Investigando el pez tetra mexicano que tiene cambios enormes en los niveles de glucosa en la sangre sin padecer efectos secundarios. Entender esto ayudaría a encontrar nuevos medicamentos para personas con diabetes tipo 2.",
+            "oncarrusel":false
+        },
+        {
+            "source":{
+                "id":null,
+                "name":"ONsalus"
+            },
+            "author":"Sonia Collado",
+            "title":"Pie diabético: causas, síntomas y tratamiento",
+            "url":"https://www.onsalus.com/pie-diabetico-causas-sintomas-y-tratamiento-17105.html",
+            "urlToImage":"https://cdn0.onsalus.com/es/posts/5/0/1/consejos_para_prevenir_el_pie_diabetico_17105_3_600.webp",
+            "publishedAt":"2015-11-23",
+            "overview":"El pie diabético es una alteración caracterizada por un daño en los nervios o vasos sanguíneos que se manifiesta en forma de infección, úlcera o lesión en los tejidos de las extremidades inferiores de pacientes con diabetes mellitus. Esto ocurre debido a los niveles inadecuados de glucosa en sangre que acaban afectado la salud vascular, además de otros factores frecuentes en estos pacientes, como hipertensión arterial o colesterol elevado.",
+            "oncarrusel":true
+        },
+        {
+            "source":{
+                "id":null,
+                "name":"KevinMD.com"
+            },
+            "author":"Jon Bloom, MD",
+            "title":"Diabetes impacts the whole body, but the foot can’t be forgotten",
+            "url":"https://www.kevinmd.com/2021/12/diabetes-impacts-the-whole-body-but-the-foot-cant-be-forgotten.html",
+            "urlToImage":"https://cdn0.onsalus.com/es/posts/5/0/1/consejos_para_prevenir_el_pie_diabetico_17105_3_600.webp",
+            "publishedAt":"2021-12-18",
+            "overview":"Diabetes is a complex yet common disease that impacts over 34 million Americans. Blood glucose is just the tip of the iceberg; related complications include neuropathy, eye disease, ketoacidosis, kidney disease, cardiovascular disease and more. In fact, it could be said that diabetes is a “whole body” disease, in the sense that it spirals out to cause devastating problems that impact many regions of the body, including mental health. It’s a constellation of complications that stack up to make overall health suffer in the diabetes patient.",
+            "oncarrusel":true
+        },
+        {
+            "source":{
+                "id":null,
+                "name":"Gobierno de México"
+            },
+            "author":"Secretaría de salud",
+            "title":"547. En México, 12.4 millones de personas viven con diabetes",
+            "url":"https://www.gob.mx/salud/prensa/547-en-mexico-12-4-millones-de-personas-viven-con-diabetes?idiom=es",
+            "urlToImage":"https://www.gob.mx/cms/uploads/press/main_image/243046/post_IMG-20221113-WA0001.jpg",
+            "publishedAt":"2022-11-13",
+            "overview":"En México, la Encuesta Nacional de Salud y Nutrición (Ensanut) 2021, señala que 12 millones 400 mil personas padecen diabetes, una enfermedad crónica que puede ocasionar daños irreversibles en la vista, el riñón o la piel, indicó el jefe de Medicina Interna del Hospital Nacional Homeopático (HNH) de la Secretaría de Salud, David Alejandro Vargas Gutiérrez.",
+            "oncarrusel":false
+        }
+    ]
+}
