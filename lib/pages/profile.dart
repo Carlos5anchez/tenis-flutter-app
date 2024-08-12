@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../views/conection_bt.dart';
 
 class UserProfilePage extends StatelessWidget {
   final bool? isConected;
@@ -72,6 +73,25 @@ class UserProfilePage extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           const SizedBox(height: 8),
+          ListTile(
+            leading: const Icon(Icons.bluetooth, color: Colors.white),
+            title: const Text('Vincular dispositivo',
+                style: TextStyle(color: Colors.white)),
+            trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white),
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (BuildContext context) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height *
+                        0.9, // Ocupa el 90% de la pantalla
+                    child: BtPage(),
+                  );
+                },
+              );
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.payment, color: Colors.white),
             title: const Text('Ajustes de Estadisticas',
