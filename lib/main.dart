@@ -2,6 +2,7 @@ import 'package:elegant_notification/resources/arrays.dart';
 import 'package:elegant_notification/resources/stacked_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tenis/pages/home.dart';
+import 'package:flutter_tenis/pages/information.dart';
 import 'package:flutter_tenis/pages/login.dart';
 import 'package:flutter_tenis/pages/profile.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -206,6 +207,19 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             label: 'Perfil',
           ),
+          NavigationDestination(
+            selectedIcon: Icon(
+              Icons.medical_information,
+              color: Colors.white70,
+            ),
+            icon: Badge(
+              child: Icon(
+                Icons.medical_information,
+                color: Color.fromARGB(94, 255, 255, 255),
+              ),
+            ),
+            label: 'Información',
+          ),
         ],
       ),
       body: <Widget>[
@@ -231,6 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
 
         UserProfilePage(isConected: _isConnected),
+        InfoWidget(),
       ][currentPageIndex],
     );
   }
